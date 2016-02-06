@@ -1,0 +1,61 @@
+#!/bin/sh
+echo "Initializing setup..."
+
+if [ -f /var/www/htdocs/app/etc/config.php ] || [ -f /var/www/htdocs/app/etc/env.php ]; then
+  echo "It appears Magento is already installed (app/etc/config.php or app/etc/env.php exist). Exiting setup..."
+  exit
+fi
+
+echo "Downloading files..."
+curl $MAGENTO_DOWNLOAD_URL -o $MAGENTO_VERSION.tar.gz
+tar xf $MAGENTO_VERSION.tar.gz
+mv magento-mirror-$MAGENTO_VERSION/* magento-mirror-$MAGENTO_VERSION/.htaccess /var/www/htdocs
+
+rm $MAGENTO_VERSION.tar.gz
+
+if [ "$MSETUP_USE_SAMPLE_DATA" = true ]; then
+    echo "Installing sample data..."
+    cp /opt/magento-sample-data-1.9.1.0.tgz .
+    tar xf magento-sample-data-1.9.1.0.tgz
+    cp -R magento-sample-data-1.9.1.0/media/* /var/www/htdocs/media/
+    cp -R magento-sample-data-1.9.1.0/skin/* /var/www/htdocs/skin/
+    chown -R www-data:www-data /var/www/htdocs/media
+
+    rm magento-sample-data-1.9.1.0.tgz
+
+    rm /opt/magento-sample-data-1.9.1.0.tgz
+
+    mysql -h $MSETUP_DB_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE < magento-sample-data-1.9.1.0/magento_sample_data_for_1.9.1.0.sql
+fi
+
+
+if [ -z "$MAGENTO_SECURE_URL" ]; then
+    SECURE="no"
+else
+    SECURE="yes"
+fi
+
+echo "Running Magento setup script..."
+php -f /var/www/htdocs/install.php -- --license_agreement_accepted "yes" \
+    --locale $MAGENTO_LOCALE \
+    --timezone $MAGENTO_TIMEZONE \
+    --default_currency $MAGENTO_DEFAULT_CURRENCY \
+    --db_host $MSETUP_DB_HOST \
+    --db_name $MYSQL_DATABASE \
+    --db_user $MYSQL_USER \
+    --db_pass $MYSQL_PASSWORD \
+    --url $MAGENTO_URL \
+    --skip_url_validation "yes" \
+    --use_rewrites "no" \
+    --use_secure  \
+    --secure_base_url $MAGENTO_SECURE_URL \
+    --use_secure_admin "no" \
+    --admin_firstname $MAGENTO_ADMIN_FIRSTNAME \
+    --admin_lastname $MAGENTO_ADMIN_LASTNAME \
+    --admin_email $MAGENTO_ADMIN_EMAIL \
+    --admin_username $MAGENTO_ADMIN_USERNAME \
+    --admin_password $MAGENTO_ADMIN_PASSWORD
+
+chown -R www-data:www-data /var/www/htdocs
+
+echo "The setup script has completed execution."
