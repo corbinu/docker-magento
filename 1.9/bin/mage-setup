@@ -46,7 +46,7 @@ php -f /var/www/htdocs/install.php -- --license_agreement_accepted "yes" \
     --db_pass $MYSQL_PASSWORD \
     --url $MAGENTO_URL \
     --skip_url_validation "yes" \
-    --use_rewrites "no" \
+    --use_rewrites "yes" \
     --use_secure  \
     --secure_base_url $MAGENTO_SECURE_URL \
     --use_secure_admin "no" \
