@@ -45,7 +45,7 @@ php -f /var/www/htdocs/install.php -- --license_agreement_accepted "yes" \
     --url $MAGENTO_URL \
     --skip_url_validation "yes" \
     --use_rewrites "no" \
-    --use_secure  \
+    --use_secure $SECURE \
     --secure_base_url $MAGENTO_SECURE_URL \
     --use_secure_admin "no" \
     --admin_firstname $MAGENTO_ADMIN_FIRSTNAME \
@@ -55,5 +55,13 @@ php -f /var/www/htdocs/install.php -- --license_agreement_accepted "yes" \
     --admin_password $MAGENTO_ADMIN_PASSWORD
 
 chown -R www-data:www-data /var/www/htdocs
+
+if [ "$MSETUP_CACHE" = false ]; then
+    n98-magerun cache:disable
+fi
+
+if [ "$MSETUP_LOG" = true ]; then
+    n98-magerun.phar dev:log --on
+fi
 
 echo "The setup script has completed execution."
