@@ -64,4 +64,8 @@ if [ "$MSETUP_LOG" = true ]; then
     n98-magerun.phar dev:log --on
 fi
 
+if [ "$MSETUP_NOTIFICATIONS" = false ]; then
+    n98-magerun --skip-root-check admin:notifications
+fi
+
 echo "The setup script has completed execution."

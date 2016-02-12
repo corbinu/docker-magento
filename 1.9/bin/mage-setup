@@ -59,11 +59,15 @@ php -f /var/www/htdocs/install.php -- --license_agreement_accepted "yes" \
 chown -R www-data:www-data /var/www/htdocs
 
 if [ "$MSETUP_CACHE" = false ]; then
-    n98-magerun cache:disable
+    n98-magerun --skip-root-check cache:disable
 fi
 
 if [ "$MSETUP_LOG" = true ]; then
-    n98-magerun dev:log --on
+    n98-magerun --skip-root-check dev:log --on --global
+fi
+
+if [ "$MSETUP_NOTIFICATIONS" = false ]; then
+    n98-magerun --skip-root-check admin:notifications
 fi
 
 echo "The setup script has completed execution."
