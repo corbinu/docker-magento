@@ -9,8 +9,8 @@ ENV MAGENTO_DOWNLOAD_URL https://codeload.github.com/OpenMage/magento-mirror/tar
 RUN curl -o /usr/local/bin/n98-magerun $N98_MAGERUN_URL \
     && chmod +x /usr/local/bin/n98-magerun
 
-RUN requirements="wget mysql-client-5.5 libpng12-dev libmcrypt-dev libmcrypt4 libcurl3-dev libxml2-dev libfreetype6 libjpeg62-turbo libpng12-dev libfreetype6-dev libjpeg62-turbo-dev" \
-    && apt-get update && apt-get install -y $requirements && rm -rf /var/lib/apt/lists/* \
+RUN requirements="wget cron mysql-client-5.5 libpng12-dev libmcrypt-dev libmcrypt4 libcurl3-dev libxml2-dev libfreetype6 libjpeg62-turbo libpng12-dev libfreetype6-dev libjpeg62-turbo-dev" \
+    && apt-get update && apt-get install -y --no-install-recommends $requirements && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd \
