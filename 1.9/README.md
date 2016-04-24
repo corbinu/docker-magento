@@ -9,7 +9,7 @@ and
 
 ## Magento version
 
-1.9.2.3
+1.9.2.4
 
 ## How to use
 

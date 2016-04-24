@@ -70,4 +70,6 @@ if [ "$MSETUP_NOTIFICATIONS" = false ]; then
     n98-magerun --skip-root-check admin:notifications
 fi
 
+echo "*/5 * * * * wget -O /dev/null -q $MAGENTO_URL/cron.php > /dev/null" | crontab -
+
 echo "The setup script has completed execution."
