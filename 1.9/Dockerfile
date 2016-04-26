@@ -31,6 +31,7 @@ WORKDIR /var/www/htdocs
 RUN chown -R www-data:www-data /var/www/htdocs
 
 COPY ./bin/* /usr/local/bin/
+COPY ./conf/apache2.conf /etc/apache2/apache2.conf
 
 RUN chmod +x /usr/local/bin/mage-setup
 
