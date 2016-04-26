@@ -22,8 +22,6 @@ if [ "$MSETUP_USE_SAMPLE_DATA" = true ]; then
     chown -R www-data:www-data /var/www/htdocs/media
 
     rm magento-sample-data-1.9.1.0.tgz
-    rm -r /var/www/htdocs/magento-sample-data-1.9.1.0
-    rm -r /var/www/htdocs/magento-mirror-1.9.2.4
 
     rm /opt/magento-sample-data-1.9.1.0.tgz
 
@@ -57,6 +55,9 @@ php -f /var/www/htdocs/install.php -- --license_agreement_accepted "yes" \
     --admin_email $MAGENTO_ADMIN_EMAIL \
     --admin_username $MAGENTO_ADMIN_USERNAME \
     --admin_password $MAGENTO_ADMIN_PASSWORD
+
+rm -r /var/www/htdocs/magento-sample-data-1.9.1.0
+rm -r /var/www/htdocs/magento-mirror-1.9.2.4
 
 chown -R www-data:www-data /var/www/htdocs
 
