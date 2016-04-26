@@ -22,7 +22,8 @@ if [ "$MSETUP_USE_SAMPLE_DATA" = true ]; then
     chown -R www-data:www-data /var/www/htdocs/media
 
     rm magento-sample-data-1.9.1.0.tgz
-    rm -f magento-sample-data-1.9.1.0
+    rm -f /var/www/htdocs/magento-sample-data-1.9.1.0
+    rm -f /var/www/htdocs/magento-mirror-1.9.2.4
 
     rm /opt/magento-sample-data-1.9.1.0.tgz
 
@@ -73,6 +74,5 @@ fi
 
 echo "*/5 * * * * /bin/sh /var/www/htdocs/cron.sh" | crontab -
 echo "*/5 * * * * /bin/sh /var/www/htdocs/cron.sh" | crontab -
-
 
 echo "The setup script has completed execution."
