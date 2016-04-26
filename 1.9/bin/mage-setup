@@ -72,7 +72,4 @@ if [ "$MSETUP_NOTIFICATIONS" = false ]; then
     n98-magerun --skip-root-check admin:notifications
 fi
 
-echo "*/5 * * * * /bin/sh /var/www/htdocs/cron.sh" | crontab -
-echo "*/5 * * * * /bin/sh /var/www/htdocs/cron.sh" | crontab -
-
 echo "The setup script has completed execution."
